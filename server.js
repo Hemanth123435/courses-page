@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // MySQL database connection
 const db = mysql.createConnection({
@@ -86,6 +86,71 @@ app.post('/teacher-login', (req, res) => {
       return res.status(401).send('Incorrect username or password');
     }
     res.status(200).send('Teacher login successful');
+  });
+});
+
+// Route for creating a new course
+app.post('/create-course', (req, res) => {
+  const { courseName, courseDescription } = req.body;
+  const sql = 'INSERT INTO courses (name, description) VALUES (?, ?)';
+  db.query(sql, [courseName, courseDescription], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    }
+    res.status(200).send('Course created successfully');
+  });
+});
+
+// Route for enrolling in a course
+app.post('/enroll', (req, res) => {
+  const { studentId, courseId } = req.body;
+  const sql = 'INSERT INTO enrollments (student_id, course_id) VALUES (?, ?)';
+  db.query(sql, [studentId, courseId], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    }
+    res.status(200).send('Enrolled in the course successfully');
+  });
+});
+
+// Route for dropping a course
+app.post('/drop-course', (req, res) => {
+  const { studentId, courseId } = req.body;
+  const sql = 'DELETE FROM enrollments WHERE student_id = ? AND course_id = ?';
+  db.query(sql, [studentId, courseId], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    }
+    res.status(200).send('Dropped the course successfully');
+  });
+});
+
+// Route for posting a new discussion thread
+app.post('/create-thread', (req, res) => {
+  const { courseId, userId, title, content } = req.body;
+  const sql = 'INSERT INTO threads (course_id, user_id, title, content) VALUES (?, ?, ?, ?)';
+  db.query(sql, [courseId, userId, title, content], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    }
+    res.status(200).send('Discussion thread created successfully');
+  });
+});
+
+// Route for replying to a discussion thread
+app.post('/submit-reply', (req, res) => {
+  const { threadId, userId, content } = req.body;
+  const sql = 'INSERT INTO replies (thread_id, user_id, content) VALUES (?, ?, ?)';
+  db.query(sql, [threadId, userId, content], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal Server Error');
+    }
+    res.status(200).send('Reply submitted successfully');
   });
 });
 
