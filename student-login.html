@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Custom CSS for Student Login Page */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa; /* Bootstrap background color */
+    }
+
+    .container {
+      margin-top: 50px; /* Adjust the top margin for spacing */
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .form-control {
+      width: 100%;
+    }
+
+    .btn-primary {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-3">
+    <h2>Student Login</h2>
+    <form action="welcome.html" method="POST" class="form-group">
+      <label for="username" class="form-label">Username:</label>
+      <input type="text" id="username" name="username" required class="form-control">
+      <br>
+      <label for="password" class="form-label">Password:</label>
+      <input type="password" id="password" name="password" required class="form-control">
+      <br>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+</body>
+</html>
